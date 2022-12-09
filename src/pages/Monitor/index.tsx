@@ -1,0 +1,38 @@
+import { ResCert } from '@/interfaces/interfaceCertificate';
+import { getAllCertificate } from '@/services/CertificateAPI';
+import { Box } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import { CollapseList, MonitorHeader } from './components';
+import './Monitor.scss';
+
+const initCertState = {
+  expiredCertificates: 0,
+  certificates: [],
+  issuedCertificates: 0,
+  serverStatus: {
+    errorServer: 0,
+    notWorkServer: 0,
+    normalServer: 0,
+  },
+};
+
+const Monitor = () => {
+  const [certificates, setCertificates] = useState<ResCert>(initCertState);
+
+  useEffect(() => {
+    getAllCertificate().subscribe({
+      next: ({ data }) => {
+        setCertificates(data);
+      },
+    });
+  }, []);
+
+  return (
+    <Box id="monitor" className="p-3">
+      <MonitorHeader data={certificates} />
+      <CollapseList data={certificates} />
+    </Box>
+  );
+};
+
+export default Monitor;

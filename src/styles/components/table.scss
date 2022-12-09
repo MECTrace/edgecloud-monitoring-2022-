@@ -1,0 +1,11 @@
+.penta-table {
+  thead {
+    background-color: var(--theme-cyan-dark);
+  }
+
+  &--no-data {
+    padding: 3rem 0;
+    text-align: center;
+    column-span: 100;
+  }
+}

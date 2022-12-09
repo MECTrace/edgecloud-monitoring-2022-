@@ -1,0 +1,47 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --theme-default: #464c5a;
+  --theme-red: #c25252;
+  --theme-green: #4cb86a;
+  --theme-yellow: #e2be00;
+  --theme-blue: #56acdd;
+  --theme-blue-dark: #1c7ed6;
+  --theme-purple: #8f61d9;
+  --theme-red-dark: #cc3737;
+  --theme-cyan-dark: #2e3646;
+  --theme-brown: #3f2f3d;
+  --theme-black: #1a1b1e;
+  --theme-grey: #aaa;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
+    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 500;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+.penta-link {
+  text-decoration: none;
+  color: var(--theme-blue-dark);
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &.link--invalid {
+    text-decoration: none;
+    color: inherit;
+    pointer-events: none;
+  }
+}

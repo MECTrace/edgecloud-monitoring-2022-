@@ -1,0 +1,36 @@
+#monitor {
+  background-color: #eee;
+  min-height: 100vh;
+  .collapsed {
+    background-color: #eee;
+    border-radius: 5px;
+  }
+  .nodeStatus {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    &-red {
+      background: rgb(255, 81, 0);
+    }
+    &-yellow {
+      background: rgb(255, 177, 42);
+    }
+    &-green {
+      background: rgb(75, 165, 75);
+    }
+  }
+  .serverStatus {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    &-notWork {
+      background: rgb(255, 81, 0);
+    }
+    &-error {
+      background: rgb(255, 177, 42);
+    }
+    &-normal {
+      background: rgb(75, 165, 75);
+    }
+  }
+}
