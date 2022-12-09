@@ -12,7 +12,6 @@ Run `cp env-example .env` to generate env file.
 
 Run `npm i`
 
-
 ## Development server
 
 Run `npm run dev` to start dev server. The app will reflect immediately if there are any changes of the source files.
