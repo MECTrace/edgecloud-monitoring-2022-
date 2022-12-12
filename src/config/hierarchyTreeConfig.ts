@@ -1,10 +1,5 @@
 import { ENodeStatus, IStatusConfig } from '@/interfaces/interfaceHierarchyTree';
 
-export const rootCoordinate = { x: 0, y: 0 };
-
-export const defaultNodeWidth = 90;
-export const defaultNodeHeight = 50;
-
 export const NodeStatusConfig: IStatusConfig[] = [
   {
     key: 'NONE',
