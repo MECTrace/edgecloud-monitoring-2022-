@@ -16,6 +16,7 @@
         "@mantine/core": "5.6.4",
         "@mantine/dates": "5.6.4",
         "@mantine/hooks": "5.6.4",
+        "@mantine/modals": "^5.10.0",
         "@mantine/notifications": "5.6.4",
         "@mantine/spotlight": "5.6.4",
         "axios": "^0.27.2",

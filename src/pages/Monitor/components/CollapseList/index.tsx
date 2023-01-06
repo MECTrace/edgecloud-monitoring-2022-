@@ -25,16 +25,18 @@ const CollapseList = (props: Props) => {
   };
 
   const getServerStatus = (item: ICertificateRes): string => {
-    const { expiredDay, certificateIssue } = item;
+    const { expiredDay, certificateIssue, status } = item;
     const currentDay = new Date();
 
-    if (dayjs(expiredDay) >= dayjs(currentDay) && certificateIssue === CERTIFICATE_ISSUE.NONE)
+    if (
+      dayjs(expiredDay) >= dayjs(currentDay) &&
+      certificateIssue === CERTIFICATE_ISSUE.NONE &&
+      status === 'On'
+    )
       return SERVER_STATUS.NORMAL;
+    if (status !== 'On') return SERVER_STATUS.NOT_WORK;
 
-    if (dayjs(expiredDay) < dayjs(currentDay) && certificateIssue !== CERTIFICATE_ISSUE.NO_CERT)
-      return SERVER_STATUS.ERROR;
-
-    return SERVER_STATUS.NOT_WORK;
+    return SERVER_STATUS.ERROR;
   };
 
   return (
