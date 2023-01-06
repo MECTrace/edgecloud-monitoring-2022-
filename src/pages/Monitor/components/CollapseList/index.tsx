@@ -6,9 +6,10 @@ import NodeTableContent from './NodeTableContent';
 
 type Props = {
   data: ResCert;
+  getCertificate: () => void;
 };
 const CollapseList = (props: Props) => {
-  const { data } = props;
+  const { data, getCertificate } = props;
   const { certificates } = data;
 
   const tableLabel = () => {
@@ -46,7 +47,12 @@ const CollapseList = (props: Props) => {
           {tableLabel()}
           <tbody>
             {certificates.map((item: ICertificateRes) => (
-              <NodeTableContent key={item.id} data={item} serverStatus={getServerStatus(item)} />
+              <NodeTableContent
+                key={item.id}
+                data={item}
+                serverStatus={getServerStatus(item)}
+                getCertificate={getCertificate}
+              />
             ))}
           </tbody>
         </Table>

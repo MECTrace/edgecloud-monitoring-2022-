@@ -20,17 +20,21 @@ const Monitor = () => {
   const [certificates, setCertificates] = useState<ResCert>(initCertState);
 
   useEffect(() => {
+    getCertificate();
+  }, []);
+
+  const getCertificate = () => {
     getAllCertificate().subscribe({
       next: ({ data }) => {
         setCertificates(data);
       },
     });
-  }, []);
+  };
 
   return (
     <Box id="monitor" className="p-3">
       <MonitorHeader data={certificates} />
-      <CollapseList data={certificates} />
+      <CollapseList data={certificates} getCertificate={getCertificate} />
     </Box>
   );
 };

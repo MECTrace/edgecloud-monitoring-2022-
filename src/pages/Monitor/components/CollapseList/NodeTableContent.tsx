@@ -1,5 +1,5 @@
 import { ICertificateRes } from '@/interfaces/interfaceCertificate';
-import { deleteCertificate } from '@/services/CertificateAPI';
+import { checkAndUpdateCertificate, deleteCertificate } from '@/services/CertificateAPI';
 import { Badge, Box, Button, Group, Menu, Modal, Text, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import dayjs from 'dayjs';
@@ -10,13 +10,14 @@ import EventDetail from './EventDetail';
 type Props = {
   data: ICertificateRes;
   serverStatus?: string;
+  getCertificate: () => void;
 };
 
 const NodeTableContent = (props: Props) => {
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
   const [opened, { close, open }] = useDisclosure(false);
 
-  const { data, serverStatus = 'notWork' } = props;
+  const { data, serverStatus = 'notWork', getCertificate } = props;
   const { nodeId, name, status, issuedDate, certificateIssue } = data;
 
   const handleExpandRow = (nodeId: string) => {
@@ -28,6 +29,23 @@ const NodeTableContent = (props: Props) => {
       : currentExpandedRows.concat(nodeId);
 
     setExpandedRows(newExpandedRows);
+  };
+
+  const onCheckCertificate = (id: string) => {
+    checkAndUpdateCertificate(id).subscribe({
+      next: () => {
+        getCertificate();
+      },
+    });
+  };
+
+  const onDeleteCertificate = (id: string) => {
+    deleteCertificate(id).subscribe({
+      next: () => {
+        getCertificate();
+        close();
+      },
+    });
   };
 
   return (
@@ -55,7 +73,13 @@ const NodeTableContent = (props: Props) => {
               </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Item color="green" icon={<Check />}>
+              <Menu.Item
+                color="green"
+                icon={<Check />}
+                onClick={() => {
+                  onCheckCertificate(nodeId);
+                }}
+              >
                 Check & Update
               </Menu.Item>
               <Menu.Item
@@ -76,11 +100,7 @@ const NodeTableContent = (props: Props) => {
                 </Button>
                 <Button
                   onClick={() => {
-                    deleteCertificate(nodeId).subscribe({
-                      next: () => {
-                        close();
-                      },
-                    });
+                    onDeleteCertificate(nodeId);
                   }}
                   color="red"
                 >
