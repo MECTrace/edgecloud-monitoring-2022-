@@ -47,6 +47,16 @@ const NodeTableContent = (props: Props) => {
       },
     });
   };
+  const certificateIssueColor = () => {
+    switch (certificateIssue.toUpperCase()) {
+      case 'NONE':
+        return 'green';
+      case 'CERTIFICATE EXPIRED':
+        return 'yellow';
+      default:
+        return 'red';
+    }
+  };
 
   return (
     <>
@@ -61,15 +71,15 @@ const NodeTableContent = (props: Props) => {
             {status}
           </Box>
         </td>
-        <td>{dayjs(issuedDate).format('DD/MM/YYYY')}</td>
+        <td>{dayjs(issuedDate).format('DD/MM/YYYY HH:mm:ss')}</td>
         <td>
-          <Badge>{certificateIssue}</Badge>
+          <Badge color={certificateIssueColor()}>{certificateIssue}</Badge>
         </td>
         <td>
           <Menu>
             <Menu.Target>
               <UnstyledButton>
-                <Badge color={'red'}>Action</Badge>
+                <Badge>Action</Badge>
               </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
@@ -111,13 +121,13 @@ const NodeTableContent = (props: Props) => {
           </Menu>
         </td>
         <td>
-          <Button
+          <UnstyledButton
             onClick={() => {
               handleExpandRow(nodeId);
             }}
           >
-            View Detail
-          </Button>
+            <Badge>View Detail</Badge>
+          </UnstyledButton>
         </td>
       </tr>
       <tr>
