@@ -73,34 +73,35 @@ const NodeTableContent = (props: Props) => {
         </td>
         <td>{dayjs(issuedDate).format('DD/MM/YYYY HH:mm:ss')}</td>
         <td>
-          <Badge color={certificateIssueColor()}>{certificateIssue}</Badge>
-        </td>
-        <td>
           <Menu>
             <Menu.Target>
               <UnstyledButton>
-                <Badge>Action</Badge>
+                <Badge color={certificateIssueColor()}>{certificateIssue}</Badge>
               </UnstyledButton>
             </Menu.Target>
-            <Menu.Dropdown>
-              <Menu.Item
-                color="green"
-                icon={<Check />}
-                onClick={() => {
-                  onCheckCertificate(nodeId);
-                }}
-              >
-                Check & Update
-              </Menu.Item>
-              <Menu.Item
-                onClick={open}
-                color="red"
-                icon={<ClearAll />}
-                disabled={certificateIssue === 'No Certificate'}
-              >
-                Delete Certificate
-              </Menu.Item>
-            </Menu.Dropdown>
+            {status.toUpperCase() !== 'DOWN' && (
+              <Menu.Dropdown>
+                <Menu.Item
+                  color="green"
+                  icon={<Check />}
+                  disabled={certificateIssue.toUpperCase() === 'NONE'}
+                  onClick={() => {
+                    onCheckCertificate(nodeId);
+                  }}
+                >
+                  Check & Update
+                </Menu.Item>
+                <Menu.Item
+                  onClick={open}
+                  color="red"
+                  icon={<ClearAll />}
+                  disabled={certificateIssue.toUpperCase() === 'NO CERTIFICATE'}
+                >
+                  Delete Certificate
+                </Menu.Item>
+              </Menu.Dropdown>
+            )}
+
             <Modal opened={opened} onClose={close} size="auto" title="Delete Certificate">
               <Text>Are you sure you want to delete your certificate?</Text>
 
