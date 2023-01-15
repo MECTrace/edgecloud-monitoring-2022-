@@ -33,12 +33,15 @@ const HierarchyTreeCanvas = ({ hideAttribution }: { hideAttribution: boolean }) 
 
   const [isShowModal, setIsShowModal] = useState(false);
   const [selectedNode, setSelectedNode] = useState<any>();
+  const { nodes: nodeList, edges: edgeList } = createNodesAndEdges(nodeData, communicationEvent);
 
   useEffect(() => {
-    const { nodes, edges } = createNodesAndEdges(nodeData, communicationEvent);
-    setEdges(edges);
-    setNodes(nodes);
-  }, [nodeData, communicationEvent]);
+    setNodes(nodeList);
+  }, [nodeData]);
+
+  useEffect(() => {
+    setEdges(edgeList);
+  }, [communicationEvent]);
 
   const onConnect = useCallback((connection: Connection) => {
     setEdges((eds) => addEdge(connection, eds));
