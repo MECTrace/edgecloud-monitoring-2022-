@@ -86,6 +86,25 @@ const checkStatusOfNode = (communicationEvent: ISocketEvent[], id: string) => {
   return status;
 };
 
+export const updateNodes = (nodeList: Node[], communicationEvent?: ISocketEvent[]) => {
+  let nodes: Node[] = nodeList;
+  nodes = nodeList.map((item) => {
+    const { id, position, type, data, width } = item;
+    const status = communicationEvent && checkStatusOfNode(communicationEvent, id);
+    return {
+      id,
+      position,
+      type,
+      data: {
+        label: data.label,
+        status,
+      },
+      width,
+    };
+  });
+  return nodes;
+};
+
 export const createNodesAndEdges = (
   listDevice?: IDiagramDevice[],
   communicationEvent?: ISocketEvent[],

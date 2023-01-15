@@ -1,6 +1,6 @@
 import { getEventById } from '@/services/DashboardAPI';
 import useGlobalStore from '@/stores';
-import { createNodesAndEdges } from '@/utils/hierarchyTree';
+import { createNodesAndEdges, updateNodes } from '@/utils/hierarchyTree';
 import { Box, Modal } from '@mantine/core';
 import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import ReactFlow, {
@@ -33,15 +33,18 @@ const HierarchyTreeCanvas = ({ hideAttribution }: { hideAttribution: boolean }) 
 
   const [isShowModal, setIsShowModal] = useState(false);
   const [selectedNode, setSelectedNode] = useState<any>();
-  const { nodes: nodeList, edges: edgeList } = createNodesAndEdges(nodeData, communicationEvent);
+  const { nodes: newNodes, edges: newEdges } = createNodesAndEdges(nodeData, communicationEvent);
 
   useEffect(() => {
-    setNodes(nodeList);
-  }, [nodeData]);
+    const nodesUpdated = updateNodes(nodes, communicationEvent);
+    setNodes(nodesUpdated);
+    setEdges(newEdges);
+  }, [nodeData, communicationEvent]);
 
   useEffect(() => {
-    setEdges(edgeList);
-  }, [communicationEvent]);
+    setNodes(newNodes);
+    setEdges(newEdges);
+  }, []);
 
   const onConnect = useCallback((connection: Connection) => {
     setEdges((eds) => addEdge(connection, eds));
