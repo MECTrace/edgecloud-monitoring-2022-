@@ -1,0 +1,11 @@
+.status-container {
+  position: absolute;
+  background-color: rgba($color: #000000, $alpha: 0.1);
+  border-radius: 4px;
+  right: 0;
+  top: 0;
+  z-index: 99;
+  min-width: 15rem;
+  padding: 1rem;
+  margin: 1rem;
+}

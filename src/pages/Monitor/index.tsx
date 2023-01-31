@@ -32,7 +32,7 @@ const Monitor = () => {
   };
 
   return (
-    <Box id="monitor" className="p-3">
+    <Box id="monitor">
       <MonitorHeader data={certificates} />
       <CollapseList data={certificates} getCertificate={getCertificate} />
     </Box>

@@ -29,19 +29,3 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
-
-.penta-link {
-  text-decoration: none;
-  color: var(--theme-blue-dark);
-  cursor: pointer;
-
-  &:hover {
-    text-decoration: underline;
-  }
-
-  &.link--invalid {
-    text-decoration: none;
-    color: inherit;
-    pointer-events: none;
-  }
-}

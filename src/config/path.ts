@@ -3,5 +3,6 @@ export enum Path {
   DASHBOARD = '/',
   NOT_FOUND = '/not-found',
   MONITOR = '/monitor',
+  POLICY = '/policy',
   UNDEFINED = '*',
 }

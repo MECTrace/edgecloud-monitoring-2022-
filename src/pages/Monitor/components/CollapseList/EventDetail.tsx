@@ -1,8 +1,7 @@
 import { IListEventPage } from '@/interfaces/interfaceListEvent';
 import { getEventById } from '@/services/DashboardAPI';
 import useGlobalStore from '@/stores';
-import { Box, Collapse, Pagination, Text, Table } from '@mantine/core';
-import { usePagination } from '@mantine/hooks';
+import { Box, Collapse, Pagination, Table, Text } from '@mantine/core';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
