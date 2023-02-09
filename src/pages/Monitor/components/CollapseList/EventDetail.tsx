@@ -9,12 +9,14 @@ type Props = {
   nodeId: string;
   expandedRows: any;
 };
+
 const initEventDetailState = {
   totalPage: 0,
   hasNextPage: false,
   currentPage: 0,
   events: [],
 };
+
 const EventTable = (props: Props) => {
   const { nodeId, expandedRows } = props;
   const [eventDataById, setEventDataById] = useState<IListEventPage>(initEventDetailState);

@@ -1,11 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+.policy-container {
+  margin: 0 0 20px 0;
 
-.not-found {
-  font-family: 'Pacifico', cursive, sans-serif;
-  font-size: 2rem;
-  text-align: center;
-
-  &__title {
-    font-size: 5rem;
+  .item {
+    padding: 20px;
   }
+  .description {
+    margin-bottom: 2px;
+  }
+}
+.modal-input {
+  width: 185px !important;
 }

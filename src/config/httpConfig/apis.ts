@@ -5,4 +5,8 @@ export enum APIs {
   CERTIFICATE = '/certificate',
   CHECK_CERTIFICATE = '/certificate/checkAndUpdate',
   GET_OVERVIEW_EVENT = '/event/summary',
+  GET_LIST_POLICY = '/policyManager/list',
+  GET_LIST_NODE_BY_POLICY = '/policyManager/getListNode/',
+  UPDATE_POLICY = '/policy/',
+  UPDATE_POLICY_OF_NODE = '/policyManager/',
 }
