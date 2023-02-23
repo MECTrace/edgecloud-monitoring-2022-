@@ -46,6 +46,7 @@ export interface IListEventRes {
   sendNodeId: string;
   sendNode: string;
   status: string;
+  policyName: string;
 }
 export interface IListEventPage {
   events: IListEventRes[];
