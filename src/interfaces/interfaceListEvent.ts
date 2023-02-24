@@ -23,6 +23,7 @@ export interface ISocketEvent {
   sendNodeId: string;
   receiveNodeId: string;
   status: number;
+  label: number;
   createdAt?: string;
   updatedAt?: string;
 }

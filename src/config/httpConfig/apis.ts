@@ -9,4 +9,5 @@ export enum APIs {
   GET_LIST_NODE_BY_POLICY = '/policyManager/getListNode/',
   UPDATE_POLICY = '/policy/',
   UPDATE_POLICY_OF_NODE = '/policyManager/',
+  GET_NUMBER_OF_FILE = '/event/getNumberOfFilesUpload',
 }

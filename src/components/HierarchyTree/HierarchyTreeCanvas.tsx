@@ -1,4 +1,4 @@
-import { getEventById } from '@/services/DashboardAPI';
+import { getEventById, getNumberOfFile } from '@/services/DashboardAPI';
 import useGlobalStore from '@/stores';
 import { createNodesAndEdges, updateNodes } from '@/utils/hierarchyTree';
 import { Box, Group, Modal } from '@mantine/core';
@@ -20,6 +20,7 @@ import FloatingEdge from './FloatingEdge';
 import FloatingNode from './FloatingNode';
 import './HierarchyTree.scss';
 import NodeDetail from './NodeDetail';
+import { ResOverviewEvent, ISocketEvent } from '@/interfaces/interfaceListEvent';
 const onInit = (reactFlowInstance: ReactFlowInstance) => reactFlowInstance.fitView();
 
 const HierarchyTreeCanvas = () => {
@@ -33,6 +34,17 @@ const HierarchyTreeCanvas = () => {
 
   const [isShowModal, setIsShowModal] = useState(false);
   const [selectedNode, setSelectedNode] = useState<any>();
+
+  useEffect(() => {
+    communicationEvent.map((item: ISocketEvent) => {
+      getNumberOfFile(item.sendNodeId, item.receiveNodeId).subscribe({
+        next: ({ data }) => {
+          item.label = data.total;
+        },
+      });
+    });
+  }, [communicationEvent]);
+  console.log(communicationEvent);
   const { nodes: newNodes, edges: newEdges } = createNodesAndEdges(nodeData, communicationEvent);
 
   useEffect(() => {

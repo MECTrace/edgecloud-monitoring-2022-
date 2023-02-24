@@ -58,8 +58,9 @@ function App() {
     const eventList = communicationEvent;
     if (event.status === -1) {
       const clearEvent = eventList.filter((item) => {
-        return item.id !== event.id;
+        return item.sendNodeId != event.sendNodeId || item.receiveNodeId != event.receiveNodeId;
       });
+      clearEvent.push(event);
       setCommunicationEvent(clearEvent);
     } else {
       const updatedData = eventList.map((item) =>
