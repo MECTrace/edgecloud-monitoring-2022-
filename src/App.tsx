@@ -11,7 +11,7 @@ import { mantineTheme } from './config/mantineProvider';
 import routesConfig from './config/routesConfig';
 import { defaultLanguage } from './config/system';
 import { ISocketEvent } from './interfaces/interfaceListEvent';
-import { getNodeList } from './services/DashboardAPI';
+import { getNodeList, getHistoricalEvent } from './services/DashboardAPI';
 import useGlobalStore from './stores';
 
 function App() {
@@ -52,15 +52,20 @@ function App() {
         setNodeData(data);
       },
     });
+    getHistoricalEvent().subscribe({
+      next: ({ data }) => {
+        const newE = communicationEvent.concat(data);
+        setCommunicationEvent(newE);
+      },
+    });
   }, []);
 
   const updateEvent = (event: ISocketEvent) => {
     const eventList = communicationEvent;
     if (event.status === -1) {
       const clearEvent = eventList.filter((item) => {
-        return item.sendNodeId != event.sendNodeId || item.receiveNodeId != event.receiveNodeId;
+        return item.sendNodeId != event.sendNodeId || item.receiveNodeId != event.receiveNodeId || item.id == event.id;
       });
-      clearEvent.push(event);
       setCommunicationEvent(clearEvent);
     } else {
       const updatedData = eventList.map((item) =>

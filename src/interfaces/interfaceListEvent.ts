@@ -61,3 +61,11 @@ export interface ResOverviewEvent {
   numberOfFailed: number;
   numberOfSucceed: number;
 }
+
+export interface ResHistoricalEvent {
+  id: string;
+  sendNodeId: string;
+  receiveNodeId: string;
+  label: number;
+  status: number;
+}

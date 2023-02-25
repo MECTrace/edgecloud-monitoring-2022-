@@ -1,7 +1,11 @@
 import { APIs } from '@/config/httpConfig/apis';
 import { http } from '@/helper/http';
 import { IDiagramDevice } from '@/interfaces/interfaceHierarchyTree';
-import { IListEventPage, ResOverviewEvent } from '@/interfaces/interfaceListEvent';
+import {
+  IListEventPage,
+  ResOverviewEvent,
+  ResHistoricalEvent,
+} from '@/interfaces/interfaceListEvent';
 import { from } from 'rxjs';
 
 const setUriEvent = (id: string, page?: number) =>
@@ -16,3 +20,6 @@ const setUriNumberOfFile = (sendNodeId: string, receiveNodeId: string) =>
 
 export const getNumberOfFile = (sendNodeId: string, receiveNodeId: string) =>
   from(http.get<ResOverviewEvent>(setUriNumberOfFile(sendNodeId, receiveNodeId)));
+
+export const getHistoricalEvent = () =>
+  from(http.get<ResHistoricalEvent[]>(APIs.GET_HISTORICAL_EVENTS));
