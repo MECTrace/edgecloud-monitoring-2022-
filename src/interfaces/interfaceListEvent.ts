@@ -26,6 +26,7 @@ export interface ISocketEvent {
   label: number;
   createdAt?: string;
   updatedAt?: string;
+  animated?: boolean;
 }
 export interface IListEvent {
   id: string;

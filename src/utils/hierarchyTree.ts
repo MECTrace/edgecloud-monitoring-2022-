@@ -136,7 +136,7 @@ export const createNodesAndEdges = (
   communicationEvent &&
     communicationEvent.map((item: ISocketEvent) => {
       const { id, sendNodeId, receiveNodeId, status, label } = item;
-      const animated = status === 1 || status === 2;
+      const animated = item.animated === undefined ? true : false;
       let stroke = '';
       switch (status) {
         case 1: {
