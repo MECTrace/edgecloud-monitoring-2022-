@@ -1,7 +1,9 @@
 import { Box, Title, Text, Group } from '@mantine/core';
 import { VMDetailDataProps } from '../..';
-
-const VMInformation = (props: VMDetailDataProps) => {
+interface VMInformationProps {
+  data: VMDetailDataProps;
+}
+const VMInformation = (props: VMInformationProps) => {
   const { data } = props;
   return (
     <>
