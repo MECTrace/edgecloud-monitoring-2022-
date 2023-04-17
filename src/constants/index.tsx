@@ -1,4 +1,4 @@
-import { Certificate, Home, AdjustmentsHorizontal } from 'tabler-icons-react';
+import { Certificate, Home, AdjustmentsHorizontal, ReportAnalytics } from 'tabler-icons-react';
 import { Path } from '@/config/path';
 
 export const SERVER_STATUS = {
@@ -26,6 +26,12 @@ export const MAIN_LINK = [
     color: 'green',
     label: 'Policy',
     path: Path.POLICY,
+  },
+  {
+    icon: <ReportAnalytics size={16} />,
+    color: 'yellow',
+    label: 'Usage',
+    path: Path.USAGE,
   },
 ];
 

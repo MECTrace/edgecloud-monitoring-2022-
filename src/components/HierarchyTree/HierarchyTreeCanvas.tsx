@@ -75,6 +75,7 @@ const HierarchyTreeCanvas = () => {
         next: ({ data }) => {
           if (data.events.length) {
             setSelectedNode(data.events);
+            console.log(data.events);
             setIsShowModal(true);
           }
         },

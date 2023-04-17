@@ -11,4 +11,7 @@ export enum APIs {
   UPDATE_POLICY_OF_NODE = '/policyManager/',
   GET_NUMBER_OF_FILE = '/event/getNumberOfFilesUpload',
   GET_HISTORICAL_EVENTS = '/event/historical-event/list',
+  GET_NODE_USAGE = '/event/getNumberOfFilesOfAllNode/',
+  GET_NUMBER_OF_FILE_BY_DAYS = '/event/getNumberOfFilesTimeSeries/',
+  GET_NUMBER_OF_EACH_KIND_OF_FILE = '/event/getNumberOfEachKindOfFile/',
 }

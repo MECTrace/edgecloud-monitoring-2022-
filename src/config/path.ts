@@ -4,5 +4,6 @@ export enum Path {
   NOT_FOUND = '/not-found',
   MONITOR = '/monitor',
   POLICY = '/policy',
+  USAGE = '/usage',
   UNDEFINED = '*',
 }

@@ -19,7 +19,6 @@ const initCertState = {
 const Monitor = () => {
   const [certificates, setCertificates] = useState<ResCert>(initCertState);
   const [isLoading, setLoading] = useState(false);
-
   useEffect(() => {
     getCertificate();
   }, []);
