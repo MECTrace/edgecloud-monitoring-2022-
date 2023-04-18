@@ -14,6 +14,7 @@ const MonitorHeader = (props: Props) => {
   const certDetail = () => {
     return { issuedCert: issuedCertificates, expiredCert: expiredCertificates, revokeCert: 0 };
   };
+
   return (
     <Grid>
       <HeaderNodeStatus span={4} serverStatus={serverStatus} />

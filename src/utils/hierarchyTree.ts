@@ -135,8 +135,8 @@ export const createNodesAndEdges = (
 
   communicationEvent &&
     communicationEvent.map((item: ISocketEvent) => {
-      const { id, sendNodeId, receiveNodeId, status } = item;
-      const animated = status === 1 || status === 2;
+      const { id, sendNodeId, receiveNodeId, status, label } = item;
+      const animated = item.animated === undefined ? true : false;
       let stroke = '';
       switch (status) {
         case 1: {
@@ -160,6 +160,7 @@ export const createNodesAndEdges = (
           stroke,
         },
         markerEnd: { type: MarkerType.Arrow },
+        label: label,
       });
     });
   return { nodes, edges };

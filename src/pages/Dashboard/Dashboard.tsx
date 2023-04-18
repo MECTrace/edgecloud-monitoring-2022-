@@ -1,15 +1,12 @@
 import HierarchyTree from '@/components/HierarchyTree';
-import { Box } from '@mantine/core';
-import StatusList from './components/StatusList';
-import './Dashboard.scss';
+import { Group } from '@mantine/core';
+import Status from './components/Status';
 
 export const Dashboard = () => {
   return (
-    <Box className="dashboard">
-      <StatusList />
-      <Box className="h100">
-        <HierarchyTree hideAttribution={false} />
-      </Box>
-    </Box>
+    <Group sx={{ height: '100%' }} position="apart">
+      <HierarchyTree />
+      <Status />
+    </Group>
   );
 };

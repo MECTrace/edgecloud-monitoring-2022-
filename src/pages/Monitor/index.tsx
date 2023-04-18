@@ -1,6 +1,6 @@
 import { ResCert } from '@/interfaces/interfaceCertificate';
 import { getAllCertificate } from '@/services/CertificateAPI';
-import { Box } from '@mantine/core';
+import { Box, LoadingOverlay, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { CollapseList, MonitorHeader } from './components';
 import './Monitor.scss';
@@ -18,23 +18,32 @@ const initCertState = {
 
 const Monitor = () => {
   const [certificates, setCertificates] = useState<ResCert>(initCertState);
-
+  const [isLoading, setLoading] = useState(false);
   useEffect(() => {
     getCertificate();
   }, []);
 
   const getCertificate = () => {
+    setLoading(true);
     getAllCertificate().subscribe({
       next: ({ data }) => {
         setCertificates(data);
+        setLoading(false);
       },
     });
   };
 
   return (
-    <Box id="monitor" className="p-3">
-      <MonitorHeader data={certificates} />
-      <CollapseList data={certificates} getCertificate={getCertificate} />
+    <Box id="monitor">
+      {certificates.certificates.length > 0 ? (
+        <>
+          <MonitorHeader data={certificates} />
+          <CollapseList data={certificates} getCertificate={getCertificate} />
+        </>
+      ) : (
+        <Text align="center">No Data</Text>
+      )}
+      <LoadingOverlay visible={isLoading} overlayBlur={2} />
     </Box>
   );
 };

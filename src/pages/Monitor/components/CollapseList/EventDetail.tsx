@@ -1,8 +1,7 @@
 import { IListEventPage } from '@/interfaces/interfaceListEvent';
 import { getEventById } from '@/services/DashboardAPI';
 import useGlobalStore from '@/stores';
-import { Box, Collapse, Pagination, Text, Table } from '@mantine/core';
-import { usePagination } from '@mantine/hooks';
+import { Box, Collapse, Pagination, Table, Text } from '@mantine/core';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
@@ -10,12 +9,14 @@ type Props = {
   nodeId: string;
   expandedRows: any;
 };
+
 const initEventDetailState = {
   totalPage: 0,
   hasNextPage: false,
   currentPage: 0,
   events: [],
 };
+
 const EventTable = (props: Props) => {
   const { nodeId, expandedRows } = props;
   const [eventDataById, setEventDataById] = useState<IListEventPage>(initEventDetailState);

@@ -11,7 +11,7 @@ import { mantineTheme } from './config/mantineProvider';
 import routesConfig from './config/routesConfig';
 import { defaultLanguage } from './config/system';
 import { ISocketEvent } from './interfaces/interfaceListEvent';
-import { getNodeList } from './services/DashboardAPI';
+import { getNodeList, getHistoricalEvent } from './services/DashboardAPI';
 import useGlobalStore from './stores';
 
 function App() {
@@ -52,25 +52,63 @@ function App() {
         setNodeData(data);
       },
     });
+    getHistoricalEvent().subscribe({
+      next: ({ data }) => {
+        const newE = communicationEvent.concat(data).map((item) => {
+          return { ...item, animated: false };
+        });
+        console.log(newE);
+        setCommunicationEvent(newE);
+      },
+    });
   }, []);
 
   const updateEvent = (event: ISocketEvent) => {
+    // const eventList = communicationEvent;
+    // if (event.status === -1) {
+    //   const clearEvent = eventList.filter((item) => {
+    //     return (
+    //       item.sendNodeId != event.sendNodeId ||
+    //       item.receiveNodeId != event.receiveNodeId ||
+    //       item.id == event.id
+    //     );
+    //   });
+    //   setCommunicationEvent(clearEvent);
+    // } else {
+    //   const updatedData = eventList.map((item) =>
+    //     item.id === event.id ? { ...item, status: event.status } : item,
+    //   );
+    //   setCommunicationEvent(updatedData);
+    // }
     const eventList = communicationEvent;
-    if (event.status === -1) {
-      const clearEvent = eventList.filter((item) => {
-        return item.id !== event.id;
-      });
-      setCommunicationEvent(clearEvent);
-    } else {
-      const updatedData = eventList.map((item) =>
+    const clearEvent = eventList.filter((item) => {
+      return (
+        item.sendNodeId != event.sendNodeId ||
+        item.receiveNodeId != event.receiveNodeId ||
+        item.id == event.id
+      );
+    });
+    if (event.status != -1) {
+      const updatedData = clearEvent.map((item) =>
         item.id === event.id ? { ...item, status: event.status } : item,
+      );
+      setCommunicationEvent(updatedData);
+    } else {
+      const updatedData = clearEvent.map((item) =>
+        item.id === event.id ? { ...item, animated: false } : item,
       );
       setCommunicationEvent(updatedData);
     }
   };
 
   const createNewEvent = (event: ISocketEvent) => {
-    const newEvent = communicationEvent.concat(event);
+    const newEvent = communicationEvent.concat(event).filter((item) => {
+      return (
+        item.sendNodeId != event.sendNodeId ||
+        item.receiveNodeId != event.receiveNodeId ||
+        item.id == event.id
+      );
+    });
     setCommunicationEvent(newEvent);
   };
 

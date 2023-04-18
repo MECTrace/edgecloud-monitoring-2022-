@@ -1,7 +1,7 @@
-import { getEventById } from '@/services/DashboardAPI';
+import { getEventById, getNumberOfFile } from '@/services/DashboardAPI';
 import useGlobalStore from '@/stores';
 import { createNodesAndEdges, updateNodes } from '@/utils/hierarchyTree';
-import { Box, Modal } from '@mantine/core';
+import { Box, Group, Modal } from '@mantine/core';
 import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import ReactFlow, {
   addEdge,
@@ -20,9 +20,10 @@ import FloatingEdge from './FloatingEdge';
 import FloatingNode from './FloatingNode';
 import './HierarchyTree.scss';
 import NodeDetail from './NodeDetail';
+import { ResOverviewEvent, ISocketEvent } from '@/interfaces/interfaceListEvent';
 const onInit = (reactFlowInstance: ReactFlowInstance) => reactFlowInstance.fitView();
 
-const HierarchyTreeCanvas = ({ hideAttribution }: { hideAttribution: boolean }) => {
+const HierarchyTreeCanvas = () => {
   const { nodeData, communicationEvent } = useGlobalStore((state) => ({
     nodeData: state.nodeData,
     communicationEvent: state.communicationEvent,
@@ -33,6 +34,17 @@ const HierarchyTreeCanvas = ({ hideAttribution }: { hideAttribution: boolean }) 
 
   const [isShowModal, setIsShowModal] = useState(false);
   const [selectedNode, setSelectedNode] = useState<any>();
+
+  useEffect(() => {
+    communicationEvent.map((item: ISocketEvent) => {
+      getNumberOfFile(item.sendNodeId, item.receiveNodeId).subscribe({
+        next: ({ data }) => {
+          item.label = data.total;
+        },
+      });
+    });
+  }, [communicationEvent]);
+  console.log(communicationEvent);
   const { nodes: newNodes, edges: newEdges } = createNodesAndEdges(nodeData, communicationEvent);
 
   useEffect(() => {
@@ -77,12 +89,12 @@ const HierarchyTreeCanvas = ({ hideAttribution }: { hideAttribution: boolean }) 
   };
 
   return (
-    <Box className="floatingEdges h100">
+    <>
       <Modal size="xl" withCloseButton={false} centered opened={isShowModal} onClose={onCloseModal}>
         <NodeDetail node={selectedNode} />
       </Modal>
       <ReactFlow
-        className={hideAttribution ? 'react-flow__white-censor' : ''}
+        className="diagram-fill floatingEdges"
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
@@ -91,7 +103,6 @@ const HierarchyTreeCanvas = ({ hideAttribution }: { hideAttribution: boolean }) 
         onInit={onInit}
         edgeTypes={edgeTypes}
         connectionLineComponent={FloatingConnectionLine}
-        // nodesDraggable={false}
         nodesConnectable={false}
         nodeTypes={nodeTypes}
         onNodeClick={onNodeClick}
@@ -101,7 +112,7 @@ const HierarchyTreeCanvas = ({ hideAttribution }: { hideAttribution: boolean }) 
         <Controls showInteractive={false} />
         <Background color="#aaa" gap={16} />
       </ReactFlow>
-    </Box>
+    </>
   );
 };
 

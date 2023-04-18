@@ -23,8 +23,10 @@ export interface ISocketEvent {
   sendNodeId: string;
   receiveNodeId: string;
   status: number;
+  label: number;
   createdAt?: string;
   updatedAt?: string;
+  animated?: boolean;
 }
 export interface IListEvent {
   id: string;
@@ -46,6 +48,7 @@ export interface IListEventRes {
   sendNodeId: string;
   sendNode: string;
   status: string;
+  policyName: string;
 }
 export interface IListEventPage {
   events: IListEventRes[];
@@ -58,4 +61,12 @@ export interface ResOverviewEvent {
   total: number;
   numberOfFailed: number;
   numberOfSucceed: number;
+}
+
+export interface ResHistoricalEvent {
+  id: string;
+  sendNodeId: string;
+  receiveNodeId: string;
+  label: number;
+  status: number;
 }

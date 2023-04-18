@@ -18,6 +18,7 @@ const NodeDetail = (props: NodeDetailProps) => {
           <td>{element.fileType}</td>
           <td>{element.receiveNode}</td>
           <td>{element.status}</td>
+          <td>{element.policyName}</td>
         </tr>
       );
     });
@@ -31,6 +32,7 @@ const NodeDetail = (props: NodeDetailProps) => {
           <th>File Type</th>
           <th>Receive Node</th>
           <th>Status</th>
+          <th>Policy Name</th>
         </tr>
       </thead>
       <tbody>{rows}</tbody>

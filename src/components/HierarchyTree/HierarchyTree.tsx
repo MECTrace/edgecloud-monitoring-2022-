@@ -3,10 +3,10 @@ import HierarchyTreeCanvas from './HierarchyTreeCanvas';
 
 import './HierarchyTree.scss';
 
-export const HierarchyTree = ({ hideAttribution = false }: { hideAttribution?: boolean }) => {
+export const HierarchyTree = () => {
   return (
     <ReactFlowProvider>
-      <HierarchyTreeCanvas hideAttribution={hideAttribution} />
+      <HierarchyTreeCanvas />
     </ReactFlowProvider>
   );
 };
