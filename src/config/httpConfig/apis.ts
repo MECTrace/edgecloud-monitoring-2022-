@@ -17,4 +17,5 @@ export enum APIs {
   GET_CPU_BY_NODEID = '/node/getCPUByNodeId/',
   GET_RAM_BY_NODEID = '/node/getRAMByNodeId/',
   GET_NETWORK_BY_NODEID = '/node/getTotalNetwork/',
+  GET_DISK_BY_NODEID = '/node/getDiskOperator/',
 }

@@ -13,3 +13,5 @@ export const getRAMByNodeId = (nodeId: string) =>
   from(http.get<any[]>(APIs.GET_RAM_BY_NODEID + nodeId));
 export const getNetworkByNodeId = (nodeId: string) =>
   from(http.get<any[]>(APIs.GET_NETWORK_BY_NODEID + nodeId));
+export const getDiskByNodeId = (nodeId: string) =>
+  from(http.get<any[]>(APIs.GET_DISK_BY_NODEID + nodeId));

@@ -11,14 +11,16 @@ import { Carousel } from '@mantine/carousel';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
   getCPUByNodeId,
+  getDiskByNodeId,
   getNetworkByNodeId,
   getNodeUsage,
   getNumberOfEachKindOfFile,
   getNumberOfFilesTimeSeries,
   getRAMByNodeId,
 } from '@/services/UsageAPI';
-import { FileSearch, Network } from 'tabler-icons-react';
+import { FileSearch, Network, Archive } from 'tabler-icons-react';
 import { AxiosResponse } from 'axios';
+import EdgeDisable from '@/assets/icons/Edge_disable';
 
 export interface UsageStatusDataProps {
   id: string;
@@ -55,7 +57,7 @@ export interface CPUDataProps {
 }
 export interface TimeSeriesNetworkDataProps {
   timeStamp: Date;
-  total: number;
+  average: number;
 }
 export interface NetworkDataProps {
   vmName: string;
@@ -63,10 +65,12 @@ export interface NetworkDataProps {
   totalNetWorkOut: TimeSeriesNetworkDataProps[];
   updateAt: string;
 }
-const initTimeSeriesNetworkDataProps: TimeSeriesNetworkDataProps = {
-  timeStamp: new Date(Date.now()),
-  total: 0,
-};
+export interface DiskDataProps {
+  vmName: string;
+  diskReadOperator: TimeSeriesNetworkDataProps[];
+  diskWriteOperator: TimeSeriesNetworkDataProps[];
+  updateAt: string;
+}
 
 const Usage = () => {
   const ref = useRef<HTMLDivElement>(null);
@@ -79,12 +83,12 @@ const Usage = () => {
   );
   const [isLoading, setLoading] = useState(false);
   const [selectedNode, setSelectedNode] = useState<VMDetailDataProps>();
-  const [clickedSlide, setClickedSlide] = useState(null);
   const [selectedNodeId, setSelectedNodeId] = useState('');
   const [fileTypeData, setFileTypeData] = useState<FileTypeDataProps[]>([]);
   const [CPUData, setCPUData] = useState<CPUDataProps>({ cpuUsage: 0 } as CPUDataProps);
   const [RAMData, setRAMData] = useState<RAMDataProps>({ ramUsage: 0 } as RAMDataProps);
   const [networkData, setNetworkData] = useState<NetworkDataProps>({} as NetworkDataProps);
+  const [diskData, setDiskData] = useState<DiskDataProps>({} as DiskDataProps);
   const paramAll = 'all';
   useLayoutEffect(() => {
     if (ref.current) {
@@ -103,10 +107,12 @@ const Usage = () => {
         getRAMData(nodeData[0].id);
         getCPUData(nodeData[0].id);
         getNetworkData(nodeData[0].id);
+        getDiskData(nodeData[0].id);
       } else {
         setRAMData({ vmName: nodeData[0].name, ramUsage: 0, updateAt: '' });
         setCPUData({ vmName: nodeData[0].name, cpuUsage: 0, updateAt: '' });
         setNetworkData({} as NetworkDataProps);
+        setDiskData({} as DiskDataProps);
       }
       setSelectedNode({
         id: nodeData[0].id,
@@ -124,10 +130,12 @@ const Usage = () => {
         getRAMData(data.id);
         getCPUData(data.id);
         getNetworkData(data.id);
+        getDiskData(data.id);
       } else {
         setRAMData({ vmName: data.name, ramUsage: 0, updateAt: '' });
         setCPUData({ vmName: data.name, cpuUsage: 0, updateAt: '' });
         setNetworkData({} as NetworkDataProps);
+        setDiskData({} as DiskDataProps);
       }
       setSelectedNode({
         id: data.id,
@@ -146,6 +154,9 @@ const Usage = () => {
         setNodeData(data);
         setLoading(false);
       },
+      error() {
+        setLoading(false);
+      },
     });
   };
   const gettimeSeriesDataDataByNodeId = () => {
@@ -162,6 +173,9 @@ const Usage = () => {
         setFileTypeData(data);
         setLoading(false);
       },
+      error() {
+        setLoading(false);
+      },
     });
   };
   const gettimeSeriesData = () => {
@@ -169,6 +183,9 @@ const Usage = () => {
     getNumberOfFilesTimeSeries(paramAll, paramAll).subscribe({
       next: ({ data }) => {
         settimeSeriesData(data);
+        setLoading(false);
+      },
+      error() {
         setLoading(false);
       },
     });
@@ -200,6 +217,15 @@ const Usage = () => {
       },
     });
   };
+  const getDiskData = (nodeId: string) => {
+    setLoading(true);
+    getDiskByNodeId(nodeId).subscribe({
+      next: ({ data }: AxiosResponse<any>) => {
+        setDiskData(data);
+        setLoading(false);
+      },
+    });
+  };
   const onNodeClick = (id: string) => {
     setSelectedNodeId(id);
   };
@@ -211,10 +237,10 @@ const Usage = () => {
           orientation="vertical"
           slideSize="33.333333%"
           sx={{
-            maxHeight: window.innerHeight * 1.75,
+            maxHeight: window.innerHeight,
             overflow: 'hidden',
             marginBottom: '0.75rem',
-            position: 'relative',
+            position: 'fixed',
           }}
           align="start"
           draggable
@@ -255,7 +281,7 @@ const Usage = () => {
           })}
         </Carousel>
       </Box>
-      <Box sx={{ maxWidth: width * 0.78 }}>
+      <Box ml={0.2 * width} sx={{ maxWidth: width * 0.9, overflowX: 'scroll', height: '100vh' }}>
         {/* VM Detail */}
         <Box className="vmdetail" sx={{ marginBottom: '0.75rem' }}>
           <VMDetail
@@ -269,11 +295,14 @@ const Usage = () => {
         <Box className="timeseries" sx={{ marginBottom: '0.75rem', background: '#FFFFFF' }}>
           <Tabs variant="pills" defaultValue="file">
             <Tabs.List>
-              <Tabs.Tab value="file" icon={<FileSearch size={26} />} sx={{ minWidth: '12rem' }}>
+              <Tabs.Tab value="file" icon={<FileSearch size={26} />} sx={{ minWidth: '10rem' }}>
                 File
               </Tabs.Tab>
-              <Tabs.Tab value="network" icon={<Network size={26} />} sx={{ minWidth: '12rem' }}>
+              <Tabs.Tab value="network" icon={<Network size={26} />} sx={{ minWidth: '10rem' }}>
                 Network
+              </Tabs.Tab>
+              <Tabs.Tab value="disk" icon={<Archive size={26} />} sx={{ minWidth: '10rem' }}>
+                Disk
               </Tabs.Tab>
             </Tabs.List>
             <Tabs.Panel value="file" pt="xs">
@@ -290,11 +319,49 @@ const Usage = () => {
                 <TimeSeriesNetwork
                   dataTimeSeriesFirst={networkData.totalNetWorkIn}
                   dataTimeSeriesSecond={networkData.totalNetWorkOut}
+                  tab="network"
                   width={width * 0.78}
                 />
               ) : (
-                <Box sx={{ width: width, height: height * 0.3, background: '#FFFFFF' }}>
-                  <Title order={4}>VM is down</Title>
+                <Box
+                  sx={{
+                    width: width * 0.78,
+                    height: height * 0.2,
+                    background: '#FFFFFF',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <EdgeDisable />
+                  <Title order={3}>VM is disable</Title>
+                </Box>
+              )}
+            </Tabs.Panel>
+
+            <Tabs.Panel value="disk" pt="xs">
+              {Object.keys(diskData).length != 0 ? (
+                <TimeSeriesNetwork
+                  dataTimeSeriesFirst={diskData.diskReadOperator}
+                  dataTimeSeriesSecond={diskData.diskWriteOperator}
+                  tab="disk"
+                  width={width * 0.78}
+                />
+              ) : (
+                <Box
+                  sx={{
+                    width: width * 0.78,
+                    height: height * 0.2,
+                    background: '#FFFFFF',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <EdgeDisable />
+                  <Title order={3}>VM is disable</Title>
                 </Box>
               )}
             </Tabs.Panel>

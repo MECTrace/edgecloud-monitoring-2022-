@@ -2,7 +2,10 @@ import { Box, Title, Text, Group, Progress, ThemeIcon, Image } from '@mantine/co
 import VMInformation from './VMInformation';
 import VMUsage from './VMUsage';
 import { VMDetailDataProps } from '../..';
-import VMIcon from '@/assets/images/icon-vm-deatil.svg';
+import EdgeDisable from '@/assets/icons/Edge_disable';
+import EdgeOn from '@/assets/icons/Edge_on';
+import CloudOn from '@/assets/icons/Cloud_on';
+import CloudDisable from '@/assets/icons/Cloud_disable';
 
 interface VMDetailProps {
   data: VMDetailDataProps;
@@ -29,12 +32,17 @@ const VMDetail = (props: VMDetailProps) => {
     <>
       <Box sx={{ width: width, height: height * 1.25, background: '#FFFFFF' }}>
         <Group position="center" mt="0" spacing="xs" pt={'1.2%'} grow>
-          <Image
-            width={'150%'}
-            pl={'xs'}
-            sx={{ display: 'flex', justifyContent: 'center' }}
-            src={VMIcon}
-          />
+          {data.name == 'Cloud Central' ? (
+            data.status == 'On' ? (
+              <CloudOn />
+            ) : (
+              <CloudDisable />
+            )
+          ) : data.status == 'On' ? (
+            <EdgeOn />
+          ) : (
+            <EdgeDisable />
+          )}
           <VMInformation data={data} />
           <VMUsage width={width} cpu={cpu} ram={ram} />
         </Group>
