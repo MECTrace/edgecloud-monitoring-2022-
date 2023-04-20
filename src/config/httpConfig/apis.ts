@@ -14,4 +14,7 @@ export enum APIs {
   GET_NODE_USAGE = '/event/getNumberOfFilesOfAllNode/',
   GET_NUMBER_OF_FILE_BY_DAYS = '/event/getNumberOfFilesTimeSeries/',
   GET_NUMBER_OF_EACH_KIND_OF_FILE = '/event/getNumberOfEachKindOfFile/',
+  GET_CPU_BY_NODEID = '/node/getCPUByNodeId/',
+  GET_RAM_BY_NODEID = '/node/getRAMByNodeId/',
+  GET_NETWORK_BY_NODEID = '/node/getTotalNetwork/',
 }

@@ -2,12 +2,24 @@ import { Box, Title, Progress } from '@mantine/core';
 
 type Props = {
   width: number;
+  cpu: number;
+  ram: number;
 };
 
 const VMUsage = (props: Props) => {
-  const { width } = props;
-  const CPUUsage = 85;
-  const avaiRam = 70;
+  const { width, cpu, ram } = props;
+  const getColor = (status: number) => {
+    if (status == 0) {
+      return 'gray';
+    } else if (status <= 40) {
+      return 'green';
+    } else if (status <= 70) {
+      return 'yellow';
+    } else {
+      return 'red';
+    }
+  };
+
   return (
     <>
       <Box id="performance" sx={{ marginLeft: '5rem' }}>
@@ -15,22 +27,22 @@ const VMUsage = (props: Props) => {
           CPU Usage
         </Title>
         <Progress
-          color="green"
-          label={`${CPUUsage}%`}
+          color={getColor(cpu)}
+          label={`${Math.round(cpu)}%`}
           size="xl"
           mb={'md'}
-          value={CPUUsage}
+          value={cpu == 0 ? 100 : cpu}
           sx={{ width: width * 0.2 }}
         />
         <Title order={5} mb={'md'}>
-          Available RAM
+          RAM
         </Title>
         <Progress
-          color="green"
-          label={`${avaiRam}%`}
+          color={getColor(ram)}
+          label={`${Math.round(ram)}%`}
           size="xl"
           mb={'md'}
-          value={avaiRam}
+          value={ram == 0 ? 100 : ram}
           sx={{ width: width * 0.2 }}
         />
       </Box>

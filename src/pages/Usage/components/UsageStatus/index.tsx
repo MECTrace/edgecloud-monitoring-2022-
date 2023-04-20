@@ -1,5 +1,6 @@
 import { Box, Card, Title, Text, Group, Divider, Image } from '@mantine/core';
 import { UsageStatusDataProps } from '../..';
+import VMIconList from '@/assets/images/icon-vm-list.svg';
 
 const UsageStatus = (props: UsageStatusDataProps) => {
   const { total, lastHours, id, status, name, nodeURL } = props;
@@ -14,7 +15,7 @@ const UsageStatus = (props: UsageStatusDataProps) => {
             padding: '1rem',
           }}
         >
-          <Image width={'40%'} src="src\assets\images\icon-vm-list.svg" />
+          <Image width={'40%'} src={VMIconList} />
           <Box sx={{ paddingTop: '0.5rem' }}>
             <Text sx={{ marginBottom: '0.2rem' }} color={'white'}>
               {name}

@@ -5,13 +5,13 @@ import { useEffect, useRef } from 'react';
 
 interface UsageStatusProps {
   data: UsageStatusDataProps[];
+  width: number;
 }
 
 const BarChart = (props: UsageStatusProps) => {
-  const { data } = props;
+  const { data, width } = props;
   const svgRef = useRef(null);
   const margin = { top: 10, right: 50, bottom: 90, left: 50 };
-  const width = window.innerWidth * 0.32;
 
   const height = window.innerHeight * 0.5;
   useEffect(() => {

@@ -1,14 +1,21 @@
 import { Box, Title, Text, Group, Progress, ThemeIcon, Image } from '@mantine/core';
-import { DevicesPc } from 'tabler-icons-react';
 import VMInformation from './VMInformation';
 import VMUsage from './VMUsage';
 import { VMDetailDataProps } from '../..';
+import VMIcon from '@/assets/images/icon-vm-deatil.svg';
+
 interface VMDetailProps {
   data: VMDetailDataProps;
+  width: number;
+  cpu: number;
+  ram: number;
 }
 
 const VMDetail = (props: VMDetailProps) => {
-  let { data } = props;
+  let data = props.data;
+  const width = props.width;
+  const cpu = props.cpu;
+  const ram = props.ram;
   if (!data) {
     data = {
       id: '',
@@ -17,7 +24,6 @@ const VMDetail = (props: VMDetailProps) => {
       nodeURL: '',
     };
   }
-  const width = window.innerWidth * 0.58;
   const height = window.innerHeight * 0.2;
   return (
     <>
@@ -27,10 +33,10 @@ const VMDetail = (props: VMDetailProps) => {
             width={'150%'}
             pl={'xs'}
             sx={{ display: 'flex', justifyContent: 'center' }}
-            src="src\assets\images\icon-vm-deatil.svg"
+            src={VMIcon}
           />
           <VMInformation data={data} />
-          <VMUsage width={width} />
+          <VMUsage width={width} cpu={cpu} ram={ram} />
         </Group>
       </Box>
     </>

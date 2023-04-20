@@ -5,9 +5,10 @@ import { FileTypeDataProps } from '../..';
 
 interface FileTypeProps {
   data: FileTypeDataProps[];
+  width: number;
 }
 const PieChart = (props: FileTypeProps) => {
-  const { data } = props;
+  const { data, width } = props;
   data.map((d) => {
     if (d) {
       d.fileType = d.fileType.replace('.', '');
@@ -15,13 +16,12 @@ const PieChart = (props: FileTypeProps) => {
   });
   const svgRef = useRef(null);
   const margin = { top: 10, right: 50, bottom: 50, left: 10 };
-  const width = window.innerWidth * 0.25;
   const height = window.innerHeight * 0.5;
 
   d3.select(svgRef.current).select('svg').remove();
 
   const radius = (0.8 * Math.min(width, height)) / 2;
-  const innerRadius = radius - 60;
+  const innerRadius = radius * 0.55;
 
   const color = d3
     .scaleOrdinal()

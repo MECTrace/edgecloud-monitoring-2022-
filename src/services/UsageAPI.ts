@@ -7,3 +7,9 @@ export const getNumberOfFilesTimeSeries = (nodeId: string, numberOfDays: string)
   from(http.get<any[]>(APIs.GET_NUMBER_OF_FILE_BY_DAYS + nodeId + '/' + numberOfDays));
 export const getNumberOfEachKindOfFile = (nodeId: string) =>
   from(http.get<any[]>(APIs.GET_NUMBER_OF_EACH_KIND_OF_FILE + nodeId));
+export const getCPUByNodeId = (nodeId: string) =>
+  from(http.get<any[]>(APIs.GET_CPU_BY_NODEID + nodeId));
+export const getRAMByNodeId = (nodeId: string) =>
+  from(http.get<any[]>(APIs.GET_RAM_BY_NODEID + nodeId));
+export const getNetworkByNodeId = (nodeId: string) =>
+  from(http.get<any[]>(APIs.GET_NETWORK_BY_NODEID + nodeId));
